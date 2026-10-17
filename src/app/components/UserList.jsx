@@ -1,6 +1,8 @@
+
+
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers, setSearchTerm, deleteUser } from './usersSlice';
+import { fetchUsers, setSearchTerm, deleteUser } from '../../features/users/usersSlice';
 
 const UserList = () => {
   const dispatch = useDispatch();
