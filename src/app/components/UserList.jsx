@@ -1,5 +1,3 @@
-
-
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, setSearchTerm, deleteUser } from '../../features/users/usersSlice';
@@ -22,16 +20,24 @@ const UserList = () => {
   );
 
   if (status === 'loading') {
-    return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading users...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-[40vh] text-gray-500 font-medium">
+        Loading users...
+      </div>
+    );
   }
 
   if (status === 'failed') {
-    return <div style={{ textAlign: 'center', marginTop: '50px', color: 'red' }}>Error: {error}</div>;
+    return (
+      <div className="text-center mt-12 text-red-500 font-medium">
+        Error: {error}
+      </div>
+    );
   }
 
   return (
-    <div style={{ maxWidth: '700px', margin: '30px auto', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h2>User Dashboard</h2>
+    <div className="max-w-2xl mx-auto my-8 p-6 font-sans bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-lg shadow-lg text-white">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">User Dashboard</h2>
 
       {/* Search Bar Functionality */}
       <input
@@ -39,23 +45,28 @@ const UserList = () => {
         placeholder="Search by name or email..."
         value={searchTerm}
         onChange={(e) => dispatch(setSearchTerm(e.target.value))}
-        style={{ width: '100%', padding: '10px', marginBottom: '20px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' }}
+        className="w-full p-3 mb-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent box-border text-gray-800 placeholder-gray-400"
       />
 
-      <p style={{ color: '#666' }}>Showing {filteredUsers.length} of {users.length} users</p>
+      <p className="text-gray-600 text-sm mb-4">
+        Showing {filteredUsers.length} of {users.length} users
+      </p>
 
       {/* User Cards Grid */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div className="flex flex-col gap-3">
         {filteredUsers.map((user) => (
-          <div key={user.id} style={{ border: '1px solid #e0e0e0', padding: '15px', borderRadius: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#fafafa' }}>
+          <div 
+            key={user.id} 
+            className="border border-gray-200 p-4 rounded-lg flex justify-between items-center bg-gray-50 hover:bg-white hover:shadow-sm transition-all"
+          >
             <div>
-              <h4 style={{ margin: '0 0 4px 0' }}>{user.name}</h4>
-              <p style={{ margin: '0 0 2px 0', color: '#555', fontSize: '14px' }}>Email: {user.email}</p>
-              <p style={{ margin: 0, color: '#777', fontSize: '13px' }}>City: {user.address.city}</p>
+              <h4 className="font-semibold text-gray-800 mb-1">{user.name}</h4>
+              <p className="text-gray-600 text-sm mb-0.5">Email: {user.email}</p>
+              <p className="text-gray-500 text-xs">City: {user.address.city}</p>
             </div>
             <button
               onClick={() => dispatch(deleteUser(user.id))}
-              style={{ backgroundColor: '#ff4d4d', color: 'white', border: 'none', padding: '8px 12px', borderRadius: '4px', cursor: 'pointer' }}
+              className="bg-red-500 hover:bg-red-600 text-white font-medium border-none px-3.5 py-2 rounded-md cursor-pointer text-sm transition-colors"
             >
               Delete
             </button>
