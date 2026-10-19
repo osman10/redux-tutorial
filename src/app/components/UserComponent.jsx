@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUsers, addUser, deleteUser } from '../features/users/usersSlice';
+import { fetchUsers, addUser, deleteUser } from '../../features/users/usersSliceTwo';
 
 const UserComponent = () => {
   const dispatch = useDispatch();
-  const { users, status, error } = useSelector((state) => state.users);
+  const { users, status, error } = useSelector((state) => state.usersTwo);
 
   // Form state matching your data structure
   const [name, setName] = useState('');

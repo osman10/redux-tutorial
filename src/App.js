@@ -1,10 +1,14 @@
 
-import UserList from './app/components/UserList';
+// import UserList from './app/components/UserList';
+
+import UserComponent from "./app/components/UserComponent";
+
 
 function App() {
   return (
     <>
-      <UserList />
+      
+      <UserComponent />
     </>
   );
 }
