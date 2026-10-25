@@ -1,14 +1,16 @@
 
 // import UserList from './app/components/UserList';
 
-import UserComponent from "./app/components/UserComponent";
+import ExpenseTracker from "./app/components/ExpenseTracker";
+
+// import UserComponent from "./app/components/UserComponent";
 
 
 function App() {
   return (
     <>
       
-      <UserComponent />
+      <ExpenseTracker />
     </>
   );
 }
