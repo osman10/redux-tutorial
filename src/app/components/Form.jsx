@@ -58,7 +58,7 @@ const Form = () => {
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded transition duration-200"
+                    className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold px-4 py-2 rounded transition duration-200"
                 >
                     Add Transaction
                 </button>
