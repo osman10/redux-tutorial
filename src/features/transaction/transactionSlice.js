@@ -12,7 +12,7 @@ editing: {}
 // get transactions
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchTransactions",
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const transactions = await getTransactions();
       return transactions;
@@ -24,7 +24,7 @@ export const fetchTransactions = createAsyncThunk(
 // create transaction
 export const createNewTransaction = createAsyncThunk(
   "transactions/createNewTransaction",
-  async (transactionData) => {
+  async (transactionData, { rejectWithValue }) => {
     try {
       const newTransaction = await createTransaction(transactionData);
       return newTransaction;
@@ -36,7 +36,7 @@ export const createNewTransaction = createAsyncThunk(
 // edit transaction
 export const editExistingTransaction = createAsyncThunk(
   "transactions/editExistingTransaction",
-  async ({ transactionId, updatedData }) => {
+  async ({ transactionId, updatedData }, { rejectWithValue }) => {
     try {
       const editedTransaction = await editTransaction(transactionId, updatedData);
       return editedTransaction;
@@ -48,7 +48,7 @@ export const editExistingTransaction = createAsyncThunk(
 // delete transaction
 export const deleteExistingTransaction = createAsyncThunk(
   "transactions/deleteExistingTransaction",
-  async (transactionId) => {
+  async (transactionId, { rejectWithValue }) => {
     try {
       await deleteTransaction(transactionId);
       return transactionId;

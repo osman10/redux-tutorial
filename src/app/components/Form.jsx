@@ -1,10 +1,50 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createNewTransaction } from "../../features/transaction/transactionSlice";
+
 
 
 const Form = () => {
+    const [name, setName] = useState("");
+    const [amount, setAmount] = useState("");
+    const [type, setType] = useState("expense");
+    const [submitError, setSubmitError] = useState("");
+    // const [editMode, setEditMode] = useState(false);
+
+    const dispatch=useDispatch();
+
+    const reset =() => {
+        setName("");
+        setAmount("");
+        setType("expense");
+        setSubmitError("");
+    }
+
+    const handleCreateTransaction = async (e) => {
+        e.preventDefault();
+        const transactionData = {
+            name: name.trim(),
+            amount: parseFloat(amount),
+            type
+        };
+
+        try {
+            await dispatch(createNewTransaction(transactionData)).unwrap();
+            reset();
+        } catch (error) {
+            setSubmitError(
+                typeof error === "string"
+                    ? error
+                    : error.message || "Unable to create transaction."
+            );
+        }
+    };
+
+
     return (
         <div className="p-4 bg-gray-50 ">
             <h2 className="text-sky-500 font-bold text-xl">Add Expense</h2>
-            <form className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+            <form onSubmit={handleCreateTransaction} className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
                 {/* Expense/Transaction Name */}
                 <div className="mb-4">
                     <label htmlFor="expenseName" className="block text-gray-700 font-bold mb-2">Name</label>
@@ -13,6 +53,9 @@ const Form = () => {
                         type="text"
                         id="expenseName"
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </div>
 
@@ -24,6 +67,11 @@ const Form = () => {
                         type="number"
                         id="expenseAmount"
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                        min="0"
+                        step="any"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
                     />
                 </div>
 
@@ -37,6 +85,8 @@ const Form = () => {
                                 id="incomeRadio"
                                 value="income"
                                 name="transaction_type"
+                                checked={type === "income"}
+                                onChange={(e) => setType(e.target.value)}
                                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                             />
                             <span className="ml-2 text-gray-700 font-medium">Income</span>
@@ -48,12 +98,20 @@ const Form = () => {
                                 id="expenseRadio"
                                 value="expense"
                                 name="transaction_type"
+                                checked={type === "expense"}
+                                onChange={(e) => setType(e.target.value)}
                                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                             />
                             <span className="ml-2 text-gray-700 font-medium">Expense</span>
                         </label>
                     </div>
                 </div>
+
+                {submitError && (
+                    <p role="alert" className="mb-4 text-red-600">
+                        {submitError}
+                    </p>
+                )}
 
                 {/* Submit Button */}
                 <button
