@@ -1,13 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import usersReducer from '../features/users/usersSlice';
-import usersSliceTwo from '../features/users/usersSliceTwo';
-import transactionReducer from '../features/transaction/transactionSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from "../features/api/apiSlice";
 
 export const store = configureStore({
-  reducer: {
-    users: usersReducer,
-    usersTwo: usersSliceTwo,
-    transactions: transactionReducer,
-  },
+    reducer: {
+        [apiSlice.reducerPath]: apiSlice.reducer,
+    },
+    middleware: (getDefaultMiddlewares) =>
+        getDefaultMiddlewares().concat(apiSlice.middleware),
 });
-
